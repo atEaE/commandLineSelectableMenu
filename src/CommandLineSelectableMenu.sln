@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{DD66C269
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandLineSelectableMenu", "CommandLineSelectableMenu\CommandLineSelectableMenu.csproj", "{2E3884C3-DA45-46FC-8BBD-E87DF606C6C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_CommandLineSelectableMenu", "Test_CommandLineSelectableMenu\Test_CommandLineSelectableMenu.csproj", "{1A122BC6-28EF-4F90-A5E8-4DAC9C42B3B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_CommandLineSelectableMenu", "Test_CommandLineSelectableMenu\Test_CommandLineSelectableMenu.csproj", "{1A122BC6-28EF-4F90-A5E8-4DAC9C42B3B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
