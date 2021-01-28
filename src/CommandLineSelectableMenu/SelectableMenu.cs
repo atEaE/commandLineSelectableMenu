@@ -10,14 +10,30 @@ namespace CommandLineSelectableMenu
     public class SelectableMenu<T>
     {
         private List<SelectableMenuItem<T>> items;
+        private SelectableMenuOptions options;
         private int selectedIndex = 0;
 
         /// <summary>
         /// Create new selectable menu instance.
         /// </summary>
         public SelectableMenu()
+            : this(new SelectableMenuOptions())
+        { }
+        
+        /// <summary>
+        /// Create new selectable menu instance.
+        /// </summary>
+        /// <param name="options">menu options</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public SelectableMenu(SelectableMenuOptions options)
         {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
             items = new List<SelectableMenuItem<T>>();
+            this.options = options;
         }
 
         /// <summary>
@@ -32,7 +48,7 @@ namespace CommandLineSelectableMenu
                 throw new ArgumentNullException();
             }
 
-            items.Add(new SelectableMenuItem<T>(item));
+            items.Add(new SelectableMenuItem<T>(item, options));
         }
 
         /// <summary>
@@ -47,7 +63,7 @@ namespace CommandLineSelectableMenu
                 throw new ArgumentNullException();
             }
 
-            items.AddRange(collection.Select(i => new SelectableMenuItem<T>(i)));
+            items.AddRange(collection.Select(i => new SelectableMenuItem<T>(i, options)));
         }
 
         /// <summary>
@@ -61,12 +77,9 @@ namespace CommandLineSelectableMenu
                 throw new InvalidOperationException("The item does not exist in the menu. Please set the item.");
             }
 
-            var currentRow = Console.CursorTop;
-            foreach(var i in items)
-            {
-                i.SetPosition(currentRow);
-                currentRow++;
-            }            
+            Console.ResetColor();
+            var orgCursorTop = Console.CursorTop;
+            setMenuItemsRow(orgCursorTop);
 
             do
             {
@@ -92,12 +105,30 @@ namespace CommandLineSelectableMenu
                         selectedIndexIncrement();
                         break;
                     case ConsoleKey.Enter:
+                        if (options.IsClearAfterSelection)
+                        {
+                            clear();
+                            Console.SetCursorPosition(0, orgCursorTop);
+                        }
                         return items[selectedIndex].Item;
                     default:
                         break;
                 }
             }
             while (true);
+        }
+
+        /// <summary>
+        /// Set the number for each line.
+        /// </summary>
+        /// <param name="topCursor">top cursor</param>
+        private void setMenuItemsRow(int topCursor)
+        {
+            foreach (var i in items)
+            {
+                i.SetPosition(topCursor);
+                topCursor++;
+            }
         }
 
         /// <summary>
@@ -119,6 +150,17 @@ namespace CommandLineSelectableMenu
             if (selectedIndex > 0)
             {
                 selectedIndex--;
+            }
+        }
+
+        /// <summary>
+        /// clear the selectable menu
+        /// </summary>
+        private void clear()
+        {
+            foreach(var i in items)
+            {
+                i.Crear();
             }
         }
     }

@@ -1,7 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+	<PackageId>CommandLineSelectableMenu</PackageId>
+	<Title>CommandLineSelectableMenu</Title>
+	<Version>1.0.0</Version>
+	<Description>Provides a command line only selectable menu.</Description>
+	<AssemblyName>CommandLineSelectableMenu</AssemblyName>
+	<Authors>EtaAoki</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageProjectUrl>https://github.com/atEaE/commandLineSelectableMenu</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/atEaE/commandLineSelectableMenu</RepositoryUrl>
+	<PackageTags>commandline;shell;selectablemenu</PackageTags>
+	<Copyright>Copyright (c) 2021 EtaAoki</Copyright>
+	<RepositoryType>git</RepositoryType>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild><GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
+
