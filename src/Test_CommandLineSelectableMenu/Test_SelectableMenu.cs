@@ -1,5 +1,6 @@
 using CommandLineSelectableMenu;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Test_CommandLineSelectableMenu
@@ -13,17 +14,47 @@ namespace Test_CommandLineSelectableMenu
             var selectableMenu = new SelectableMenu<string>();
 
             var ex = Assert.Throws<ArgumentNullException>(() => { selectableMenu.Add(null); });
-            ex.Message.Is("Value cannot be null.");
+            ex.Message.Is("Value cannot be null. (Parameter 'item')");
         }
 
         [Fact]
-        public void NullAddRange()
+        public void NullAdd_Title()
         {
             // setup
             var selectableMenu = new SelectableMenu<string>();
 
-            var ex = Assert.Throws<ArgumentNullException>(() => { selectableMenu.AddRange(null); });
-            ex.Message.Is("Value cannot be null.");
+            var ex = Assert.Throws<ArgumentNullException>(() => { selectableMenu.Add(null, "sample"); });
+            ex.Message.Is("Value cannot be null. (Parameter 'title')");
+        }
+
+        [Fact]
+        public void NullAdd_Item()
+        {
+            // setup
+            var selectableMenu = new SelectableMenu<string>();
+
+            var ex = Assert.Throws<ArgumentNullException>(() => { selectableMenu.Add("title", null); });
+            ex.Message.Is("Value cannot be null. (Parameter 'item')");
+        }
+
+        [Fact]
+        public void NullAdd_KvPKey()
+        {
+            // setup
+            var selectableMenu = new SelectableMenu<string>();
+
+            var ex = Assert.Throws<ArgumentNullException>(() => { selectableMenu.Add(new KeyValuePair<string, string>(null, "sample")); });
+            ex.Message.Is("Value cannot be null. (Parameter 'item.Key')");
+        }
+
+        [Fact]
+        public void NullAdd_NullAdd_KvPValue()
+        {
+            // setup
+            var selectableMenu = new SelectableMenu<string>();
+
+            var ex = Assert.Throws<ArgumentNullException>(() => { selectableMenu.Add(new KeyValuePair<string, string>("title", null)); });
+            ex.Message.Is("Value cannot be null. (Parameter 'item.Value')");
         }
 
         [Fact]
