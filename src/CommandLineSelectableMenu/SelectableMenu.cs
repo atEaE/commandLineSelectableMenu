@@ -38,6 +38,7 @@ namespace CommandLineSelectableMenu
 
         /// <summary>
         /// Add a menu item.
+        /// If Title is not set, ToString() will be called.
         /// </summary>
         /// <param name="item">menu item.</param>
         /// <exception cref="ArgumentNullException"></exception>
@@ -45,10 +46,52 @@ namespace CommandLineSelectableMenu
         {
             if (item == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(item));
             }
 
-            items.Add(new SelectableMenuItem<T>(item, options));
+            items.Add(new SelectableMenuItem<T>(item.ToString(), item, options));
+        }
+
+        /// <summary>
+        /// Add a menu item.
+        /// </summary>
+        /// <param name="title">menu title</param>
+        /// <param name="item">menu item.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public void Add(string title, T item)
+        {
+            if (title == null)
+            {
+                throw new ArgumentNullException(nameof(title));
+            }
+
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            items.Add(new SelectableMenuItem<T>(title, item, options));
+        }
+
+        /// <summary>
+        /// Add a menu item.
+        /// Key is the title that will be displayed in the menu.
+        /// </summary>
+        /// <param name="item">menu item.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public void Add(KeyValuePair<string, T> item)
+        {
+            if (item.Key == null)
+            {
+                throw new ArgumentNullException("item.Key");
+            }
+
+            if (item.Value == null)
+            {
+                throw new ArgumentNullException("item.Value");
+            }
+
+            items.Add(new SelectableMenuItem<T>(item.Key, item.Value, options));
         }
 
         /// <summary>
@@ -63,7 +106,22 @@ namespace CommandLineSelectableMenu
                 throw new ArgumentNullException();
             }
 
-            items.AddRange(collection.Select(i => new SelectableMenuItem<T>(i, options)));
+            items.AddRange(collection.Select(i => new SelectableMenuItem<T>(i.ToString(), i, options)));
+        }
+
+        /// <summary>
+        /// Add a menu item.
+        /// </summary>
+        /// <param name="collection">menu items.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public void AddRange(IEnumerable<KeyValuePair<string, T>> collection)
+        {
+            if (collection == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            items.AddRange(collection.Select(i => new SelectableMenuItem<T>(i.Key, i.Value, options)));
         }
 
         /// <summary>
