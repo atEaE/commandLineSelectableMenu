@@ -13,6 +13,12 @@ namespace CommandLineSelectableMenu
         private bool? selected;
         private int row;
         private SelectableMenuOptions options;
+        private string title;
+
+        /// <summary>
+        /// Menu title.
+        /// </summary>
+        internal string Title { get => title; private set { title = value; } }        
 
         /// <summary>
         /// draw item template.
@@ -25,11 +31,17 @@ namespace CommandLineSelectableMenu
         /// <summary>
         /// Create new selectable menuItem instance.
         /// </summary>
+        /// <param name="title">menu title.</param>
         /// <param name="item">menu item.</param>
         /// <param name="options">menu options.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        internal SelectableMenuItem(T item, SelectableMenuOptions options)
+        internal SelectableMenuItem(string title, T item, SelectableMenuOptions options)
         {
+            if (title == null)
+            {
+                throw new ArgumentNullException(nameof(title));
+            }
+
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
@@ -40,6 +52,7 @@ namespace CommandLineSelectableMenu
                 throw new ArgumentNullException(nameof(options));
             }
 
+            this.title = title;
             this.item = item;
             this.options = options;
         }
@@ -71,12 +84,12 @@ namespace CommandLineSelectableMenu
                 {
                     Console.ForegroundColor = options.SelectedType.SelectedColor;
                     var cursor = options.SelectedType is ArrowSelectedType ? ((ArrowSelectedType)options.SelectedType).GetArrow() : " ";
-                    Console.WriteLine(ITEM_TEMPLATE, cursor, item.ToString());
+                    Console.WriteLine(ITEM_TEMPLATE, cursor, title);
                 }
                 else
                 {
                     Console.ForegroundColor = options.SelectedType.BaseColor;
-                    Console.WriteLine(ITEM_TEMPLATE, " ", item.ToString());
+                    Console.WriteLine(ITEM_TEMPLATE, " ", title);
                 }
                 Console.ResetColor();
 
