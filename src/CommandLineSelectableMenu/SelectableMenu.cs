@@ -135,24 +135,15 @@ namespace CommandLineSelectableMenu
                 throw new InvalidOperationException("The item does not exist in the menu. Please set the item.");
             }
 
-            Console.ResetColor();
             var orgCursorTop = Console.CursorTop;
-            setMenuItemsRow(orgCursorTop);
+            setMenuItemsRows(orgCursorTop);
+
+            // Draw the menu to the console and fix the position of CursorTop.
+            drawItems();
+            var anchorTop = Console.CursorTop;
 
             do
             {
-                for (var i = 0; i < items.Count; i++)
-                {
-                    if (selectedIndex == i)
-                    {
-                        items[i].Draw(selected: true);
-                    }
-                    else
-                    {
-                        items[i].Draw();
-                    }
-                }
-
                 var keyInfo = Console.ReadKey();
                 switch (keyInfo.Key)
                 {
@@ -172,15 +163,36 @@ namespace CommandLineSelectableMenu
                     default:
                         break;
                 }
+
+                drawItems();
+                Console.SetCursorPosition(0, anchorTop);
             }
             while (true);
+        }
+
+        /// <summary>
+        ///  Draw the selectable menu.
+        /// </summary>
+        private void drawItems()
+        {
+            for (var i = 0; i < items.Count; i++)
+            {
+                if (selectedIndex == i)
+                {
+                    items[i].Draw(selected: true);
+                }
+                else
+                {
+                    items[i].Draw();
+                }
+            }
         }
 
         /// <summary>
         /// Set the number for each line.
         /// </summary>
         /// <param name="topCursor">top cursor</param>
-        private void setMenuItemsRow(int topCursor)
+        private void setMenuItemsRows(int topCursor)
         {
             foreach (var i in items)
             {
