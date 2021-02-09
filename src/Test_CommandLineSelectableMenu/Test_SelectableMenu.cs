@@ -8,6 +8,28 @@ namespace Test_CommandLineSelectableMenu
     public class Test_SelectableMenu
     {
         [Fact]
+        public void NullOptionsArguments()
+        {
+            var ex = Assert.Throws<ArgumentNullException>(() => 
+            {
+                SelectableMenuOptions options = null;
+                var selectableMenu = new SelectableMenu<string>(options); 
+            });
+            ex.Message.Is("Value cannot be null. (Parameter 'options')");
+        }
+
+        [Fact]
+        public void NullActionArguments()
+        {
+            var ex = Assert.Throws<ArgumentNullException>(() =>
+            {
+                Action<SelectableMenuOptions> action = null;
+                var selectableMenu = new SelectableMenu<string>(action);
+            });
+            ex.Message.Is("Value cannot be null. (Parameter 'action')");
+        }
+
+        [Fact]
         public void NullAdd()
         {
             // setup

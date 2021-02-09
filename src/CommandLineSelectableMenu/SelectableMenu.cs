@@ -19,6 +19,29 @@ namespace CommandLineSelectableMenu
         public SelectableMenu()
             : this(new SelectableMenuOptions())
         { }
+
+        /// <summary>
+        /// Create new selectable menu instance.
+        /// </summary>
+        /// <param name="action">function.</param>
+        public SelectableMenu(Action<SelectableMenuOptions> action)
+        {
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            var options = new SelectableMenuOptions();
+            action.Invoke(options);
+
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            items = new List<SelectableMenuItem<T>>();
+            this.options = options;
+        }
         
         /// <summary>
         /// Create new selectable menu instance.
