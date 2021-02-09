@@ -3,7 +3,7 @@
   <PropertyGroup>
 	<PackageId>CommandLineSelectableMenu</PackageId>
 	<Title>CommandLineSelectableMenu</Title>
-	<Version>1.1.1</Version>
+	<Version>1.2.0</Version>
 	<Description>Provides a command line only selectable menu.</Description>
 	<AssemblyName>CommandLineSelectableMenu</AssemblyName>
 	<Authors>EtaAoki</Authors>
